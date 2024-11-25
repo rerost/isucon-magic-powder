@@ -24,8 +24,8 @@ bootstrap() {
   install_all
 
   # 必要なくなった
-  # info "start git init"
-  # git_init
+  info "start git init"
+  git_init
 
   info "start git config"
   git_config
