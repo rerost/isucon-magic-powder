@@ -8,7 +8,7 @@ isucon用のスクリプト類
 ## Bootstrap
 
 ```
-curl https://raw.githubusercontent.com/rerost/magic-powder/master/bootstrap -O && chmod +x bootstrap && ./bootstrap
+curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap
 ```
 
 ## Usage

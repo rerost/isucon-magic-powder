@@ -148,14 +148,14 @@ check() {
 }
 
 download_makefile() {
-  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/Makefile
+  curl -O https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/Makefile
 }
 
 download_deploy_script() {
-  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/deploy
+  curl -O https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/deploy
   chmod +x deploy
 
-  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/deploy_on_remote
+  curl -O https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/deploy_on_remote
   chmod +x deploy_on_remote
 }
 
