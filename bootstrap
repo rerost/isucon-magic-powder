@@ -23,12 +23,12 @@ bootstrap() {
   info "start install tools"
   install_all
 
-  info "start git config"
-  git_config
-
   # 必要なくなった
   info "start git init"
   git_init
+
+  info "start git config"
+  git_config
 
   info "download Makefile"
   download_makefile
@@ -47,6 +47,14 @@ git_config() {
   git config --global user.name "rerost"
 
   git config --global core.editor 'vim -c "set fenc=utf-8"'
+
+  info "start save"
+  read -p "Save dir. e.g. webapp" input
+  git add $input
+  git commit -m "init"
+  read -p "empty repository. e.g git@github.com:rerost/hogehoge.git" input
+  git remote add origin $input
+  git push -u origin master
 }
 
 install_all() {
@@ -95,6 +103,7 @@ install_discordcat() {
 
 git_init() {
   git init
+  git branch -M master
   ssh-keygen && cat $HOME/.ssh/id_rsa.pub
 
   printf "\e[34mCopy this SSH key (https://github.com/settings/ssh/new)\e[m\n"
