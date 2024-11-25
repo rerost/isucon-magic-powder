@@ -124,7 +124,7 @@ checking() {
 file_check() {
   big_info "file checking!"
 
-  FILES=(bootstrap Makefile deploy deploy_from_local)
+  FILES=(bootstrap Makefile deploy deploy_on_remote)
 
   for f in ${FILES[@]}; do
     if [ -e $f ]; then
