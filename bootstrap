@@ -43,8 +43,8 @@ bootstrap() {
 }
 
 git_config() {
-  git config --global user.email "htilcs1115@gmail.com"
-  git config --global user.name "k-nasa"
+  git config --global user.email "hahihu314+github@gmail.com"
+  git config --global user.name "rerost"
 
   git config --global core.editor 'vim -c "set fenc=utf-8"'
 }
@@ -148,14 +148,14 @@ check() {
 }
 
 download_makefile() {
-  curl -O https://raw.githubusercontent.com/k-nasa/magic-powder/master/Makefile
+  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/Makefile
 }
 
 download_deploy_script() {
-  curl -O https://raw.githubusercontent.com/k-nasa/magic-powder/master/deploy
+  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/deploy
   chmod +x deploy
 
-  curl -O https://raw.githubusercontent.com/k-nasa/magic-powder/master/deploy_on_remote
+  curl -O https://raw.githubusercontent.com/rerost/magic-powder/master/deploy_on_remote
   chmod +x deploy_on_remote
 }
 
