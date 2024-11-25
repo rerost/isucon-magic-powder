@@ -23,12 +23,12 @@ bootstrap() {
   info "start install tools"
   install_all
 
+  info "start git config"
+  git_config
+
   # 必要なくなった
   info "start git init"
   git_init
-
-  info "start git config"
-  git_config
 
   info "download Makefile"
   download_makefile
