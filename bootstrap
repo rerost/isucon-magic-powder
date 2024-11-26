@@ -50,12 +50,14 @@ setup() {
   MYSQL_CONF=/etc/mysql
 
   sudo cp -a $MYSQL_CONF $HOME/config/mysql
-  sudo ln -sf $HOME/config/mysql /etc/mysql
+  rm -rf $MYSQL_CONF
+  sudo ln -sf $HOME/config/mysql /etc
 
   NGINX_CONF=/etc/nginx
 
   sudo cp -a $NGINX_CONF $HOME/config/nginx
-  sudo ln -sf $HOME/config/nginx /etc/nginx/
+  sudo rm -rf $NGINX_CONF
+  sudo ln -sf $HOME/config/nginx /etc
 
   sudo chown -R isucon config/
 }
