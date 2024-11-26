@@ -20,6 +20,9 @@ $1
 }
 
 bootstrap() {
+  info "setup"
+  setup
+
   info "start install tools"
   install_all
 
@@ -40,6 +43,21 @@ bootstrap() {
 
   info "script Done!"
 
+}
+
+setup() {
+  mkdir -p $HOME/config
+  MYSQL_CONF=/etc/mysql
+
+  sudo cp -a $MYSQL_CONF $HOME/config/mysql
+  sudo ln -sf $HOME/config/mysql /etc/mysql
+
+  NGINX_CONF=/etc/nginx
+
+  sudo cp -a $NGINX_CONF $HOME/config/nginx
+  sudo ln -sf $HOME/config/nginx /etc/nginx/
+
+  sudo chown -R isucon config/
 }
 
 git_config() {
