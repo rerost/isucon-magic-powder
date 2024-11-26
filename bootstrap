@@ -48,11 +48,19 @@ git_config() {
 
   git config --global core.editor 'vim -c "set fenc=utf-8"'
 
+  echo "Skip save repository?(y/n): "
+  read answer
+
+  if [ "$answer" = "y" ]; then
+    echo "Skipped!"
+    return 0
+  fi
+
   info "start save"
-  read -p "Save dir. e.g. webapp" input
+  read -p "Save dir. e.g. webapp: " input
   git add $input
   git commit -m "init"
-  read -p "empty repository. e.g git@github.com:rerost/hogehoge.git" input
+  read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " input
   git remote add origin $input
   git push -u origin master
 }
