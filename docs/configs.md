@@ -2,6 +2,7 @@
 
 
 ```sh
+mkdir -p $HOME/config
 MYSQL_CONF=/etc/mysql
 
 sudo cp -a $MYSQL_CONF $HOME/config/mysql
@@ -11,4 +12,6 @@ NGINX_CONF=/etc/nginx
 
 sudo cp -a $NGINX_CONF $HOME/config/nginx
 sudo ln -sf $HOME/config/nginx /etc/nginx/
+
+sudo chown -R isucon config/
 ```
