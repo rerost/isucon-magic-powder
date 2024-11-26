@@ -69,6 +69,7 @@ install_all() {
   install_alp
   install_pt_query_digest
   install_discordcat
+  install_sqldef
 }
 
 
@@ -107,6 +108,17 @@ install_discordcat() {
   rm -rf discordcat_x86_64-unknown-linux-gnu
 
   success "install discordcat"
+}
+
+install_sqldef() {
+  info 'Install sqldef'
+
+  wget -O - https://github.com/sqldef/sqldef/releases/latest/download/mysqldef_linux_amd64.tar.gz | tar xvz
+
+  sudo mv ./mysqldef /usr/bin/
+  sudo chmod +x /usr/bin/mysqldef
+
+  success "install sqldef"
 }
 
 git_init() {
