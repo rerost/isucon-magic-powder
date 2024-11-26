@@ -12,4 +12,6 @@ NGINX_CONF=/etc/nginx
 
 sudo cp -a $NGINX_CONF $HOME/config/nginx
 sudo ln -sf $HOME/config/nginx /etc/nginx/
+
+sudo chown -R isucon config/
 ```
