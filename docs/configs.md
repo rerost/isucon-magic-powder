@@ -2,6 +2,7 @@
 
 
 ```sh
+mkdir -p $HOME/config
 MYSQL_CONF=/etc/mysql
 
 sudo cp -a $MYSQL_CONF $HOME/config/mysql
