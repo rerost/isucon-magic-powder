@@ -2,10 +2,10 @@
 
 
 ```sh
-MYSQL_CONF=/etc/mysql/my.cnf
+MYSQL_CONF=/etc/mysql
 
-sudo cp $MYSQL_CONF $HOME/config/mysql
-sudo ln -sf $HOME/config/mysql/my.cnf /etc/mysql
+sudo cp -a $MYSQL_CONF $HOME/config/mysql
+sudo ln -sf $HOME/config/mysql /etc/mysql
 
 NGINX_CONF=/etc/nginx
 
