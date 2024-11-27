@@ -119,7 +119,9 @@ install_pt_query_digest() {
 install_discocat() {
   info 'Install discocat'
 
+  snap install go
   go install github.com/rerost/discocat@latest
+  cp ~/go/bin/discocat /usr/bin/
 
   success "install discocat"
 }
