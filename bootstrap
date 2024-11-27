@@ -88,7 +88,7 @@ git_config() {
 install_all() {
   install_alp
   install_pt_query_digest
-  install_discordcat
+  install_discocat
   install_sqldef
 }
 
@@ -116,18 +116,12 @@ install_pt_query_digest() {
   success "install pt-query-digest"
 }
 
-install_discordcat() {
-  info 'Install discordcat'
+install_discocat() {
+  info 'Install discocat'
 
-  wget https://github.com/k-nasa/discordcat/releases/download/0.1.0/discordcat_x86_64-unknown-linux-gnu.tar.gz
-  tar -xf discordcat_x86_64-unknown-linux-gnu.tar.gz
-  sudo mv ./discordcat_x86_64-unknown-linux-gnu/discordcat /usr/bin/
-  sudo chmod +x /usr/bin/discordcat
+  go install github.com/rerost/discocat@latest
 
-  rm discordcat_x86_64-unknown-linux-gnu.tar.gz
-  rm -rf discordcat_x86_64-unknown-linux-gnu
-
-  success "install discordcat"
+  success "install discocat"
 }
 
 install_sqldef() {
@@ -187,7 +181,7 @@ file_check() {
 check() {
   big_info "install checking!"
 
-  COMMANDS=(alp pt-query-digest htop discordcat)
+  COMMANDS=(alp pt-query-digest htop discocat)
 
   for c in ${COMMANDS[@]}; do
     checking $c
