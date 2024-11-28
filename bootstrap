@@ -104,6 +104,14 @@ install_alp() {
   success "install alp"
 }
 
+install_slp() {
+  info 'Installing slp'
+  wget https://github.com/tkuchiki/slp/releases/download/v0.2.1/slp_linux_amd64.tar.gz
+  tar -xvf slp_linux_amd64.tar.gz
+  sudo mv slp /usr/local/bin/slp
+  success "install slp"
+}
+
 install_pt_query_digest() {
   info 'Install pt-query-digest'
   wget https://github.com/percona/percona-toolkit/archive/3.0.5-test.tar.gz
@@ -121,9 +129,18 @@ install_discocat() {
 
   sudo apt-get install -y golang-go
   go install github.com/rerost/discocat@latest
-  cp ~/go/bin/discocat /usr/bin/
+  sudo cp ~/go/bin/discocat /usr/bin/
 
   success "install discocat"
+}
+
+install_pprotein {
+  info 'Install pprotein'
+  sudo apt install -y graphviz gv
+  wget https://github.com/kaz/pprotein/releases/download/v1.2.4/pprotein_1.2.4_linux_amd64.tar.gz
+  tar -xvf pprotein_1.2.4_linux_amd64.tar.gz
+  sudo cp ~/pprotein /usr/bin/
+  success "install pprotein"
 }
 
 install_sqldef() {
