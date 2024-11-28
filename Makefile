@@ -53,6 +53,14 @@ send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > tmp.txt && discocat -f tmp.txt --filename alp.md
 	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
 
+.PHONY: dump_schema
+dump_schema:
+	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) > schema.sql
+
+.PHONY: dry_run_schema
+dry_run_schema:
+	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --dry-run < schema.sql
+
 .PHONY: mysql
 mysql: ## mysql接続コマンド
 	mysql -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
