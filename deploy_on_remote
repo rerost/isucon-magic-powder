@@ -19,8 +19,9 @@ git pull origin $BRANCH && \
 make bench"
 
 cd /home/isucon && \
-git fetch && \
+git fetch origin && \
+git reset --hard origin/master && \
 git stash && \
-git checkout $BRANCH && \
+git checkout origin/$BRANCH && \
 git pull origin $BRANCH && \
 make bench
