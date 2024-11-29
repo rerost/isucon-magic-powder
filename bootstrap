@@ -108,7 +108,7 @@ install_slp() {
   info 'Installing slp'
   wget https://github.com/tkuchiki/slp/releases/download/v0.2.1/slp_linux_amd64.tar.gz
   tar -xvf slp_linux_amd64.tar.gz
-  sudo mv slp /usr/local/bin/slp
+  sudo mv slp /usr/bin
   success "install slp"
 }
 
@@ -134,12 +134,14 @@ install_discocat() {
   success "install discocat"
 }
 
-install_pprotein {
+install_pprotein() {
   info 'Install pprotein'
+
   sudo apt install -y graphviz gv
   wget https://github.com/kaz/pprotein/releases/download/v1.2.4/pprotein_1.2.4_linux_amd64.tar.gz
   tar -xvf pprotein_1.2.4_linux_amd64.tar.gz
   sudo cp ~/pprotein /usr/bin/
+
   success "install pprotein"
 }
 
