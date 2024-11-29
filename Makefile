@@ -61,6 +61,11 @@ dump_schema:
 dry_run_schema:
 	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --dry-run < schema.sql
 
+.PHONY: apply_schema
+apply_schema:
+	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < schema.sql
+
+
 .PHONY: mysql
 mysql: ## mysql接続コマンド
 	mysql -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
