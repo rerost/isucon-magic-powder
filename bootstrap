@@ -91,13 +91,29 @@ git_config() {
 
   git config --global core.editor 'vim -c "set fenc=utf-8"'
 
-  info "start save"
-  read -p "Save dir. e.g. webapp: " input
-  git add $input
-  git commit -m "init"
   read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " input
   git remote add origin $input
-  git push -u origin master
+
+  echo "Save repository?(y/n): "
+  read answer
+
+  if [ "$answer" = "y" ]; then
+    info "start save"
+    while :
+    do
+      read -p "Git added (y/n)" input
+      if [ "$input" = "y" ]; then
+        echo "Continue to setup!"
+        break
+      elif [ "$input" = "n" ]; then
+        echo "Please Add SSH Key."
+      fi
+    done
+    git commit -m "init"
+    git push -u origin master
+  else
+    git fetch origin
+  fi
 }
 
 install_all() {
