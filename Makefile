@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 
-APP_DIR := todo
+APP_DIR := TODO
+APP_UNIT_NAME := TODO
 
 NGINX_LOG := /var/log/nginx/access.log
 MYSQL_SLOW_LOG := /var/log/mysql/slow.log
@@ -10,9 +11,9 @@ NGINX_CONFIG := /etc/nginx/nginx.conf
 
 DB_HOST := 127.0.0.1
 DB_PORT := 3306
-DB_USER := todo
-DB_PASS := todo
-DB_NAME := todo
+DB_USER := TODO
+DB_PASS := TODO
+DB_NAME := TODO
 
 EDIT_MYSQL_CONFIG := $(APP_DIR)/my.cnf
 EDIT_NGINX_CONFIG := $(APP_DIR)/nginx.conf
@@ -80,7 +81,9 @@ application_build: ## application build (wip)
 
 .PHONY: application_restart
 application_restart: ## application restart (wip)
-	@echo "Please implement!!"
+	# TODO systemctl を利用しているか確認する
+	sudo systemctl stop $(APP_UNIT_NAME)
+	sudo systemctl start $(APP_UNIT_NAME)
 
 .PHONY: middleware_restart
 middleware_restart: ## mysqlとnginxのrestart
@@ -96,6 +99,10 @@ daemon_reload:
 
 .PHONY: bench
 bench: daemon_reload log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
+
+.PHONY: log
+log: ## logをtailする
+	sudo journalctl -u $(APP_UNIT_NAME) -f
 
 .PHONY: commit
 commit:
