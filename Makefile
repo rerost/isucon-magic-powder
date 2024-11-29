@@ -90,8 +90,12 @@ middleware_restart: ## mysqlとnginxのrestart
 .PHONY: restart
 restart: application_restart middleware_restart ## application, mysql, nginxのリスタート
 
+.PHONY: daemon_reload
+daemon_reload:
+	sudo systemctl daemon-reload
+
 .PHONY: bench
-bench: log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
+bench: daemon_reload log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
 
 .PHONY: commit
 commit:
