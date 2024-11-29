@@ -73,7 +73,7 @@ mysql: ## mysql接続コマンド
 
 .PHONY: pprof
 pprof:
-	@go tool pprof -png -output pprof.png http://localhost:6060/debug/pprof/profile?seconds=30 && discordcat -f pprof.png --filename pprof.png
+	@go tool pprof -png -output pprof.png http://localhost:6060/debug/pprof/block?seconds=60 && discordcat -f pprof.png --filename pprof.png
 
 .PHONY: application_build
 application_build: ## application build (wip)
