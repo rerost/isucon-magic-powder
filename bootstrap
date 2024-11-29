@@ -42,7 +42,7 @@ bootstrap() {
 }
 
 initial_setup() {
-  echo "Initial Setup?(y/n): "
+  echo "Run Initial Setup?(y/n): "
   read answer
 
   if [ "$answer" = "n" ]; then
