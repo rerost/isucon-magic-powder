@@ -53,6 +53,7 @@ show_slow_config: ## mysqlのslowログ設定を確認するコマンド
 send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > tmp.txt && discocat -f tmp.txt --filename alp.md
 	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
+	discocat -f profile.pb.gz --filename profile.pb.gz
 
 .PHONY: dump_schema
 dump_schema:
@@ -73,7 +74,9 @@ mysql: ## mysql接続コマンド
 
 .PHONY: pprof
 pprof:
-	@go tool pprof -png -output pprof.png http://localhost:6060/debug/pprof/block?seconds=60 && discordcat -f pprof.png --filename pprof.png
+	curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=60
+	go tool pprof -http=:1234 profile.pb.gz
+	# Run: ssh -NL 1234:localhost:1234 isucon
 
 .PHONY: application_build
 application_build: ## application build (wip)
