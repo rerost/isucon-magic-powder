@@ -127,9 +127,15 @@ install_pt_query_digest() {
 install_discocat() {
   info 'Install discocat'
 
-  sudo apt-get install -y golang-go
-  go install github.com/rerost/discocat@latest
-  sudo cp ~/go/bin/discocat /usr/bin/
+  mkdir tmp_discocat/
+  cd tmp_discocat/
+
+  wget https://github.com/rerost/discocat/releases/download/v0.1.1/discocat_Linux_x86_64.tar.gz
+  tar zxvf discocat_Linux_x86_64.tar.gz
+  sudo mv ./discocat /usr/bin/
+
+  cd -
+  rm -rf tmp_discocat/
 
   success "install discocat"
 }
