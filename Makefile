@@ -2,6 +2,7 @@
 
 APP_DIR := TODO
 APP_UNIT_NAME := TODO
+IF_NAME := TODO # e.g. enp39s0
 
 NGINX_LOG := /var/log/nginx/access.log
 MYSQL_SLOW_LOG := /var/log/mysql/slow.log
@@ -106,6 +107,10 @@ bench: daemon_reload log_reset application_build restart slow_on ## bench回す�
 .PHONY: log
 log: ## logをtailする
 	sudo journalctl -u $(APP_UNIT_NAME) -f
+
+.PHONY: ifstat
+ifstat: ## ifstatを見る
+	ifstat -i $(IF_NAME) 1
 
 .PHONY: commit
 commit:
