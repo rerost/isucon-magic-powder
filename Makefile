@@ -29,6 +29,9 @@ help: ## show help
 log_reset: ## logファイルを初期化する
 	@sudo cp /dev/null $(MYSQL_SLOW_LOG)
 	@sudo cp /dev/null $(NGINX_LOG)
+	@sudo cp /dev/null profile.pb.gz
+	@sudo cp /dev/null profile.html
+	@sudo cp /dev/null profile.png
 
 .PHONY: alp
 alp: ## alpのログを見る
@@ -79,10 +82,12 @@ mysql: ## mysql接続コマンド
 .PHONY: pprof
 pprof:
 	curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=60
-	go tool pprof --no_browser -http=:1234 profile.pb.gz < /dev/null &
+	go tool pprof --no_browser -http=:1234 profile.pb.gz < /dev/null & echo $$! > pprof.pid
+	sleep 2
 	wget -O profile.html http://localhost:1234/ui/flamegraph
-	kill $!
-	html2png -html=profile.html -out=profile.png
+	kill `cat pprof.pid`
+	rm -f pprof.pid
+	html2png -html=profile.html -output=profile.png
 
 .PHONY: application_build
 application_build: ## application build (wip)
