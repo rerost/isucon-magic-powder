@@ -1,9 +1,11 @@
 - [ ] レポジトリを作る https://github.com/new
 - [ ] ~/.ssh/config にIPアドレスを追加
+- [ ] ベンチ回す
 
 ## サーバの初期設定
 - [ ] `curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap`
 - [ ] ファイルディスクリプタの設定
+- [ ] ベンチ回す
 
 ```
 $ ulimit -n
@@ -22,6 +24,7 @@ $ ulimit -n
     - [ ] `cat Makefile | grep TODO`
 - [ ] deployスクリプトの確認
     - [ ] `./deploy`
+- [ ] ベンチ回す
 - [ ] バックアップ
     - [ ] `make db-dump`
 - [ ] ローカル環境の構築
