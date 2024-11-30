@@ -9,7 +9,7 @@
 $ ulimit -n
 1024
 
-$ vi etc/security/limits.conf
+$ sudo vi /etc/security/limits.conf
 isucon  hard  nofile  10000
 isucon  soft  nofile  10000
 
