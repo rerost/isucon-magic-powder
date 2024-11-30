@@ -85,6 +85,9 @@ pprof:
 .PHONY: application_build
 application_build: ## application build (wip)
 	@echo "Please implement!!"
+	# TODO: ローカルでの確認ができるようになったら
+	# @make apply_schema
+	@make dry_run_schema
 
 .PHONY: application_restart
 application_restart: ## application restart (wip)
