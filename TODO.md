@@ -1,5 +1,7 @@
-k- [ ] レポジトリを作る https://github.com/new
+- [ ] レポジトリを作る https://github.com/new
 - [ ] ~/.ssh/config にIPアドレスを追加
+- [ ] ベンチ回す
+- [ ] 言語をGoにする
 - [ ] ベンチ回す
 
 ## サーバの初期設定
