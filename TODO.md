@@ -14,9 +14,14 @@ isucon  soft  nofile  10000
 $ ulimit -n
 ```
 
-## メトリクス周り
-- [  ] Nginx
-- [  ] Go(pprof))
+## 初期設定
+- [  ] Makefileの準備
+    - [  ] `cat Makefile | grep TODO`
+- [  ] バックアップ
+    - [  ] `make db-dump`
+- [  ] メトリクス
+    - [  ] Nginx
+    - [  ] Go(pprof))
 
 Nginx
 
@@ -59,9 +64,6 @@ func main() {
 	}()
 }
 ```
-
-## Makefile 周りに変数を入れる
-- [  ] `cat Makefile | grep TODO`
 
 ## interpolateParams=true
 ```
