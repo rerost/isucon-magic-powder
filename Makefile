@@ -107,7 +107,7 @@ daemon_reload:
 	sudo systemctl daemon-reload
 
 .PHONY: bench
-bench: daemon_reload log_reset application_build restart slow_on pprof ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
+bench: daemon_reload log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
 	# TODO: ローカルでの確認ができるようになったら
 	# @make apply_schema
 
