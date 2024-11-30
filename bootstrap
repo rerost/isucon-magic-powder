@@ -36,7 +36,7 @@ bootstrap() {
   download_deploy_script
 
   # ifstat: ネットワークの帯域を確認するためのもの
-  sudo apt-get install -y ifstat gpg
+  sudo apt-get install -y ifstat gpg net-tools golang-go
   check
 
   info "script Done!"
