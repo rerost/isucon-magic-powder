@@ -59,7 +59,7 @@ send_result: ## discordにalpとslowの出力を送信する
 
 .PHONY: dump_schema
 dump_schema:
-	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) > schema.sql
+	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --export > schema.sql
 
 .PHONY: dry_run_schema
 dry_run_schema:
