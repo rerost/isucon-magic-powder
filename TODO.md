@@ -17,11 +17,17 @@ $ ulimit -n
 ## 初期設定
 - [  ] Makefileの準備
     - [  ] `cat Makefile | grep TODO`
+- [  ] deployスクリプトの確認
+    - [  ] `./deploy`
 - [  ] バックアップ
     - [  ] `make db-dump`
 - [  ] メトリクス
     - [  ] Nginx
     - [  ] Go(pprof))
+- [  ] ローカル環境の構築
+    - [  ] `make setup-local-db`
+    - [  ] `make restore-local-db`
+    - [  ] `make check`
 
 Nginx
 
