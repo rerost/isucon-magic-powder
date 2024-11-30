@@ -222,7 +222,7 @@ install_chrome() {
 git_init() {
   git init
   git branch -M master
-  ssh-keygen && cat $HOME/.ssh/id_rsa.pub
+  ssh-keygen -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub
 
   printf "\e[34mCopy this SSH key (https://github.com/settings/ssh/new)\e[m\n"
   while :
@@ -236,7 +236,9 @@ git_init() {
     fi
   done
 
+  set +e
   ssh -T git@github.com
+  set -e
 }
 
 checking() {
