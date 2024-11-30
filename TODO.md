@@ -1,3 +1,6 @@
+- [  ] レポジトリを作る https://github.com/new
+- [  ] ~/.ssh/config にIPアドレスを追加
+
 ## サーバの初期設定
 - [  ] `curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap`
 - [  ] ファイルディスクリプタの設定
