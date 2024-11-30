@@ -91,3 +91,8 @@ func main() {
 		dbname,
 	)
 ```
+
+## sshコマンド
+```
+ssh isucon -tt "sudo su isucon"
+```
