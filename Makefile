@@ -55,6 +55,7 @@ send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > tmp.txt && discocat -f tmp.txt --filename alp.md
 	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
 	discocat -f profile.pb.gz --filename profile.pb.gz
+	discocat -f profile.html --filename profile.html
 
 .PHONY: dump_schema
 dump_schema:
@@ -76,8 +77,10 @@ mysql: ## mysql接続コマンド
 .PHONY: pprof
 pprof:
 	curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=60
-	go tool pprof -http=:1234 profile.pb.gz
-	# Run: ssh -NL 1234:localhost:1234 isucon
+	go tool pprof --no_browser -http=:1234 profile.pb.gz < /dev/null &
+	wget -O profile.html http://localhost:1234/ui/flamegraph
+	
+	kill $!
 
 .PHONY: application_build
 application_build: ## application build (wip)
@@ -102,7 +105,7 @@ daemon_reload:
 	sudo systemctl daemon-reload
 
 .PHONY: bench
-bench: daemon_reload log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
+bench: daemon_reload log_reset application_build restart slow_on pprof ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
 
 .PHONY: log
 log: ## logをtailする
