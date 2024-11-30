@@ -57,6 +57,7 @@ send_result: ## discordにalpとslowの出力を送信する
 	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
 	discocat -f profile.pb.gz --filename profile.pb.gz
 	discocat -f profile.html --filename profile.html
+	discocat -f profile.png --filename profile.png
 
 .PHONY: dump_schema
 dump_schema:
@@ -80,8 +81,8 @@ pprof:
 	curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=60
 	go tool pprof --no_browser -http=:1234 profile.pb.gz < /dev/null &
 	wget -O profile.html http://localhost:1234/ui/flamegraph
-	
 	kill $!
+	html2png -html=profile.html -out=profile.png
 
 .PHONY: application_build
 application_build: ## application build (wip)
