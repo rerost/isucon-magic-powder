@@ -1,9 +1,9 @@
-- [  ] レポジトリを作る https://github.com/new
-- [  ] ~/.ssh/config にIPアドレスを追加
+- [ ] レポジトリを作る https://github.com/new
+- [ ] ~/.ssh/config にIPアドレスを追加
 
 ## サーバの初期設定
-- [  ] `curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap`
-- [  ] ファイルディスクリプタの設定
+- [ ] `curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap`
+- [ ] ファイルディスクリプタの設定
 
 ```
 $ ulimit -n
@@ -18,19 +18,19 @@ $ ulimit -n
 ```
 
 ## 初期設定
-- [  ] Makefileの準備
-    - [  ] `cat Makefile | grep TODO`
-- [  ] deployスクリプトの確認
-    - [  ] `./deploy`
-- [  ] バックアップ
-    - [  ] `make db-dump`
-- [  ] ローカル環境の構築
-    - [  ] `make setup-local-db`
-    - [  ] `make restore-local-db`
-    - [  ] `make check`
-- [  ] メトリクス
-    - [  ] Nginx
-    - [  ] Go(pprof))
+- [ ] Makefileの準備
+    - [ ] `cat Makefile | grep TODO`
+- [ ] deployスクリプトの確認
+    - [ ] `./deploy`
+- [ ] バックアップ
+    - [ ] `make db-dump`
+- [ ] ローカル環境の構築
+    - [ ] `make setup-local-db`
+    - [ ] `make restore-local-db`
+    - [ ] `make check`
+- [ ] メトリクス
+    - [ ] Nginx
+    - [ ] Go(pprof))
 
 Nginx
 
