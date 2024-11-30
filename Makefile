@@ -32,6 +32,9 @@ log_reset: ## logファイルを初期化する
 	@sudo rm profile.pb.gz
 	@sudo rm profile.html
 	@sudo rm profile.png
+	@sudo rm profile.txt
+	@sudo rm block.txt
+	@sudo rm block.pb.gz
 
 .PHONY: alp
 alp: ## alpのログを見る
@@ -58,9 +61,12 @@ show_slow_config: ## mysqlのslowログ設定を確認するコマンド
 send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > tmp.txt && discocat -f tmp.txt --filename alp.md
 	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
-	discocat -f profile.pb.gz --filename profile.pb.gz
-	discocat -f profile.html --filename profile.html
 	discocat -f profile.png --filename profile.png
+	discocat -f profile.txt --filename profile.txt
+	discocat -f block.txt --filename block.txt
+	discocat -f profile.html --filename profile.html
+	discocat -f profile.pb.gz --filename profile.pb.gz
+	discocat -f block.pb.gz --filename block.pb.gz
 
 .PHONY: dump_schema
 dump_schema:
@@ -79,9 +85,20 @@ apply_schema:
 mysql: ## mysql接続コマンド
 	mysql -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
 
+# SECOND=60
+# debug
+SECOND=5
 .PHONY: pprof
-pprof:
-	curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=60
+pprof: # pprof(profile, block)を取得し、txt, html, pngに変換する
+	@( \
+		curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=$(SECOND) > /dev/null & \
+		curl -o block.pb.gz http://localhost:6060/debug/pprof/block?seconds=$(SECOND) > /dev/null & \
+		wait \
+	)
+	@echo "list main" | go tool pprof profile.pb.gz > profile.txt
+	@echo "list main" | go tool pprof block.pb.gz > block.txt
+
+	# Flamegraph
 	go tool pprof --no_browser -http=:1234 profile.pb.gz < /dev/null & echo $$! > pprof.pid
 	sleep 2
 	wget -O profile.html http://localhost:1234/ui/flamegraph

@@ -74,6 +74,7 @@ improt (
 )
 
 func main() {
+	runtime.SetBlockProfileRate(1)
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
