@@ -30,7 +30,7 @@ $ ulimit -n
 - [ ] ベンチ回す
 - [ ] バックアップ
     - [ ] `make dump_schema`
-    - [ ] `make db-dump`
+    - [ ] `make db_dump`
 - [ ] ローカル環境の構築
     - [ ] `make setup-local-db`
     - [ ] `make restore-local-db`

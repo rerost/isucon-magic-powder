@@ -128,7 +128,8 @@ commit:
 	git commit --allow-empty -m "isucon"
 	git push origin HEAD
 
-.PHONY: db-dump
+.PHONY: db_dump
+db-dump:
 	mysqldump -u$(DB_USER) -p$(DB_PASS) $(DB_NAME) > dump.sql
 
 .PHONY: setup-local-db
