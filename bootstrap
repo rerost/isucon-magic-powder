@@ -111,6 +111,7 @@ git_config() {
         echo "Please Add SSH Key."
       fi
     done
+    git add config
     git commit -m "init"
     git push -u origin master
   else
@@ -171,6 +172,8 @@ install_discocat() {
 
   cd -
   rm -rf tmp_discocat/
+
+  discocat --configure
 
   success "install discocat"
 }
@@ -258,11 +261,17 @@ file_check() {
 
   for f in ${FILES[@]}; do
     if [ -e $f ]; then
+      git add $f
       success "$f exists"
     else
       error "$f not exists"
     fi
   done
+
+  # dump.sql はサイズが大きいため
+  echo "dump.sql" >> .gitignore
+
+  git commit -m "add files"
 }
 
 check() {
