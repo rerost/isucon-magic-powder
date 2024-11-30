@@ -136,7 +136,7 @@ commit:
 	git push origin HEAD
 
 .PHONY: db_dump
-db-dump:
+db_dump:
 	mysqldump -u$(DB_USER) -p$(DB_PASS) $(DB_NAME) > dump.sql
 
 .PHONY: setup-local-db
