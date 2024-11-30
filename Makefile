@@ -136,3 +136,8 @@ setup-local-db:
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $(DB_NAME);"
 	mysql -u root -e "CREATE USER IF NOT EXISTS '$(DB_USER)'@'localhost' IDENTIFIED BY '$(DB_PASS)';"
 	mysql -u root -e "GRANT ALL PRIVILEGES ON $(DB_NAME).* TO '$(DB_USER)'@'localhost';"
+
+.PHONY: restore-local-db
+restore-local-db:
+	scp isucon:/home/isucon/dump.sql dump.sql
+	mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < dump.sql
