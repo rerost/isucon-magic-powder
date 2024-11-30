@@ -124,6 +124,7 @@ install_all() {
   install_discocat
   install_html2png
   install_sqldef
+  install_chrome
 }
 
 
