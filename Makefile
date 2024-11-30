@@ -84,7 +84,7 @@ pprof:
 
 .PHONY: application_build
 application_build: ## application build (wip)
-	@echo "Please implement!!"
+	cd $(APP_DIR) && make
 	# TODO: ローカルでの確認ができるようになったら
 	# @make apply_schema
 
