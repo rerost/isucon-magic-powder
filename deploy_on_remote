@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 warn() {
   printf "[\033[00;33mWARN\033[0m] $1\n"
