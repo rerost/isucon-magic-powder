@@ -1,4 +1,4 @@
-- [ ] レポジトリを作る https://github.com/new
+k- [ ] レポジトリを作る https://github.com/new
 - [ ] ~/.ssh/config にIPアドレスを追加
 - [ ] ベンチ回す
 
@@ -23,6 +23,7 @@ $ ulimit -n
 - [ ] Makefileの準備
     - [ ] `cat Makefile | grep TODO`
 - [ ] deployスクリプトの確認
+    - [ ] Go(pprof))
     - [ ] `./deploy`
 - [ ] ベンチ回す
 - [ ] バックアップ
@@ -33,7 +34,6 @@ $ ulimit -n
     - [ ] `make check`
 - [ ] メトリクス
     - [ ] Nginx
-    - [ ] Go(pprof))
 
 Nginx
 
