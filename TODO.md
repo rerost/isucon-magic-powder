@@ -94,5 +94,5 @@ func main() {
 
 ## sshコマンド
 ```
-ssh isucon -tt "sudo su isucon"
+ssh isucon -tt "cd /home/isucon && sudo su isucon"
 ```
