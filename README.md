@@ -16,3 +16,8 @@ curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/mas
 ```
 make help
 ```
+
+ポートフォワード
+```
+ssh -NL 1234:localhost:1234 isucon
+```
