@@ -96,3 +96,10 @@ func main() {
 ```
 ssh isucon -tt "cd /home/isucon && sudo su isucon"
 ```
+
+## pprof
+ベンチ開始時に
+```
+make bench
+make pprof && make send_result
+```
