@@ -87,7 +87,6 @@ application_build: ## application build (wip)
 	@echo "Please implement!!"
 	# TODO: ローカルでの確認ができるようになったら
 	# @make apply_schema
-	@make dry_run_schema
 
 .PHONY: application_restart
 application_restart: ## application restart (wip)
@@ -109,6 +108,8 @@ daemon_reload:
 
 .PHONY: bench
 bench: daemon_reload log_reset application_build restart slow_on pprof ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
+	# TODO: ローカルでの確認ができるようになったら
+	# @make apply_schema
 
 .PHONY: log
 log: ## logをtailする
@@ -117,6 +118,9 @@ log: ## logをtailする
 .PHONY: ifstat
 ifstat: ## ifstatを見る
 	ifstat -i $(IF_NAME) 1
+
+.PHONY: check
+check: application_build dry_run_schema
 
 .PHONY: commit
 commit:
