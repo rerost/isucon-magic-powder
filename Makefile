@@ -128,6 +128,9 @@ commit:
 	git commit --allow-empty -m "isucon"
 	git push origin HEAD
 
+.PHONY: dump_db
+	mysqldump -u$(DB_USER) -p$(DB_PASS) $(DB_NAME) > dump.sql
+
 .PHONY: setup-local-db
 setup-local-db:
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $(DB_NAME);"
