@@ -1,10 +1,13 @@
+## 事前準備
 - [ ] レポジトリを作る https://github.com/new
+- [ ] issueにこのTODOをコピペ
+
+## サーバの初期設定
 - [ ] ~/.ssh/config にIPアドレスを追加
 - [ ] ベンチ回す
 - [ ] 言語をGoにする
 - [ ] ベンチ回す
-
-## サーバの初期設定
+- [ ] `git add` で必要そうなものをaddしておく。`.gitignore` もこのとき修正
 - [ ] `curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap`
 - [ ] ファイルディスクリプタの設定
 - [ ] ベンチ回す
