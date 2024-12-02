@@ -64,6 +64,7 @@ show_slow_config: ## mysqlのslowログ設定を確認するコマンド
 send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > alp.txt && discocat -f alp.txt
 	@make slow > slow.txt && discocat -f slow.txt
+	discocat -f $(NGINX_ERR_LOG)
 	discocat -f profile.png
 	discocat -f profile.txt
 	discocat -f block.txt
