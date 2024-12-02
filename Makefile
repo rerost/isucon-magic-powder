@@ -60,10 +60,13 @@ slow_off: ## mysqlのslowログをoffにする
 show_slow_config: ## mysqlのslowログ設定を確認するコマンド
 	@sudo mysql -e "show variables like 'slow_query%'"
 
+BENCH_START_TIME ?= $(shell date --date="2 minutes ago" "+%Y-%m-%d %H:%M:%S")
+# make send_result BENCH_START_TIME="2024-12-01 15:35:00"
 .PHONY: send_result
 send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > alp.txt && discocat -f alp.txt
 	@make slow > slow.txt && discocat -f slow.txt
+	sudo journalctl -u $(APP_UNIT_NAME) --since "$(BENCH_START_TIME)" > log.txt && discocat -f app_log.txt
 	discocat -f $(NGINX_ERR_LOG)
 	discocat -f profile.png
 	discocat -f profile.txt
