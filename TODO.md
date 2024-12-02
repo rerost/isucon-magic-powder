@@ -168,3 +168,11 @@ make check && git push origin HEAD && ./deploy $(git branch --show-current)
 ssh -NL 1234:localhost:1234 isucon
 
 ```
+
+## シンボリックリンク
+`/usr/bin/go`` にアクセスすると `/usr/local/go/bin/go`  を参照する
+`ln -sf <dst> <src>`
+
+```
+ln -sf /usr/local/go/bin/go /usr/bin/go
+```
