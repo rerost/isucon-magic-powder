@@ -99,7 +99,7 @@ SECOND=5
 .PHONY: pprof
 pprof: # pprof(profile, block)を取得し、txt, html, pngに変換する
 	echo "## Start pprof" | discocat
-	printf "\`\`\`diff\n%s\n\`\`\`\n" "$$(git show)" | discocat
+	printf "\`\`\`diff\n%s\n\`\`\`\n" "$$(git show | head -c 1950)" | discocat
 	@( \
 		curl -o profile.pb.gz http://localhost:6060/debug/pprof/profile?seconds=$(SECOND) > /dev/null & \
 		curl -o block.pb.gz http://localhost:6060/debug/pprof/block?seconds=$(SECOND) > /dev/null & \

@@ -12,3 +12,5 @@ BRANCH=$1
 
 # TODO: ホスト名を状況に合わせる
 ssh isucon-1 "sudo -u isucon /home/isucon/deploy_on_remote $BRANCH"
+
+echo "Deployed \`\`\`$(git show | head -c 1950)\`\`\`" | discocat
