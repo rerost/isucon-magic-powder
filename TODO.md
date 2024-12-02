@@ -76,6 +76,58 @@ improt (
 	_ "net/http/pprof"
 )
 
+func initialize(c echo.Context) error {
+    ...
+    startPprof()
+}
+
+....
+
+func startPprof() {
+	log.Println("Starting pprof ...")
+	// 非同期でコマンドを実行
+	go func() {
+		// ログファイルを開く（存在しない場合は作成）
+		logFile, err := os.OpenFile("pprof_logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Printf("Failed to open log file: %v", err)
+			return
+		}
+		defer logFile.Close()
+
+		if err := runMakeCommand("/home/isucon", "pprof", logFile); err != nil {
+			log.Printf("Failed to run 'make pprof': %v", err)
+			return
+		}
+
+		if err := runMakeCommand("/home/isucon", "send_result", logFile); err != nil {
+			log.Printf("Failed to run 'make send_result': %v", err)
+			return
+		}
+
+		log.Println("End pprof")
+	}()
+}
+
+func runMakeCommand(dir string, target string, out *os.File) error {
+	cmd := exec.Command("make", target)
+	cmd.Dir = dir // 実行ディレクトリを指定
+
+	cmd.Stdout = out
+	cmd.Stderr = out
+
+	// 標準出力とエラー出力を結合して取得
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Printf("Error executing 'make %s' in %s: %v\nOutput: %s", target, dir, err, output)
+		return err
+	}
+	log.Printf("Output of 'make %s': %s", target, output)
+	return nil
+}
+
+...
+
 func main() {
 	runtime.SetBlockProfileRate(1)
 	go func() {
