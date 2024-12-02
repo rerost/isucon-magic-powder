@@ -173,3 +173,7 @@ setup-local-db:
 restore-local-db:
 	scp isucon:/home/isucon/dump.sql dump.sql
 	mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < dump.sql
+
+.PHONY: deploy
+deploy: check
+	make check && git push origin HEAD && ./deploy $(shell git branch --show-current)
