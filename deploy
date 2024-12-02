@@ -8,12 +8,6 @@ $1
 ================================================\n\e[m"
 }
 
-TARGET=$1
-BRANCH=$2
-
-# branch 指定がなければ current branch を指定したとみなす
-if [ -z "$BRANCH" ]; then
-  BRANCH=`git rev-parse --abbrev-ref HEAD`
-fi
+BRANCH=$1
 
 ssh $SSH_OPTION "sudo -u isucon /home/isucon/deploy_on_remote $BRANCH"
