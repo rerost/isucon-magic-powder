@@ -30,6 +30,7 @@ $ ulimit -n
 - [ ] deployスクリプトの確認
     - [ ] Go(pprof))
     - [ ] `./deploy`
+        - [  ] SSHのホスト名を設定する
 - [ ] ベンチ回す
 - [ ] バックアップ
     - [ ] `make dump_schema`

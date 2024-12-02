@@ -10,4 +10,5 @@ $1
 
 BRANCH=$1
 
-ssh $SSH_OPTION "sudo -u isucon /home/isucon/deploy_on_remote $BRANCH"
+# TODO: ホスト名を状況に合わせる
+ssh isucon-1 "sudo -u isucon /home/isucon/deploy_on_remote $BRANCH"
