@@ -121,12 +121,12 @@ func runMakeCommand(dir string, target string, out *os.File) error {
 	cmd.Stderr = out
 
 	// 標準出力とエラー出力を結合して取得
-	output, err := cmd.CombinedOutput()
+	err := cmd.Run()
 	if err != nil {
-		log.Printf("Error executing 'make %s' in %s: %v\nOutput: %s", target, dir, err, output)
+		log.Printf("Error executing 'make %s' in %s: %v\n", target, dir, err)
 		return err
 	}
-	log.Printf("Output of 'make %s': %s", target, output)
+	log.Printf("Output of 'make %s'", target)
 	return nil
 }
 
