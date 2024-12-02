@@ -36,7 +36,7 @@ bootstrap() {
   download_deploy_script
 
   # ifstat: ネットワークの帯域を確認するためのもの
-  sudo apt-get install -y ifstat gpg net-tools golang-go unzip
+  sudo apt-get install -y ifstat gpg net-tools unzip
   check
 
   info "script Done!"
@@ -221,6 +221,30 @@ install_chrome() {
   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
   sudo apt-get update
   sudo apt-get install -y google-chrome-stable
+}
+
+install_golang() {
+  info 'Install golang'
+
+  # /usr/bin に go があるか確認
+  if [ -f /usr/bin/go ]; then
+      success "Go is installed at /usr/bin/go."
+      return
+  fi
+  
+  # which go で結果が返ってくるか確認
+  if which go > /dev/null 2>&1; then
+      success "Go is found in PATH: $(which go)"
+      return
+  fi
+
+  # Goがない場合、最新のGoをインストール
+  curl -o go.tar.gz https://dl.google.com/go/go1.23.3.linux-amd64.tar.gz
+  rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz
+  ln -sf /usr/local/go/bin/go /usr/bin/go
+  which go
+
+  success "install golang"
 }
 
 git_init() {
