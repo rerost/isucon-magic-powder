@@ -31,12 +31,12 @@ log_reset: ## logファイルを初期化する
 	@sudo cp /dev/null $(MYSQL_SLOW_LOG)
 	@sudo cp /dev/null $(NGINX_LOG)
 	@sudo cp /dev/null $(NGINX_ERR_LOG)
-	@sudo rm profile.pb.gz
-	@sudo rm profile.html
-	@sudo rm profile.png
-	@sudo rm profile.txt
-	@sudo rm block.txt
-	@sudo rm block.pb.gz
+	@sudo rm -f profile.pb.gz
+	@sudo rm -f profile.html
+	@sudo rm -f profile.png
+	@sudo rm -f profile.txt
+	@sudo rm -f block.txt
+	@sudo rm -f block.pb.gz
 
 .PHONY: alp
 alp: ## alpのログを見る
