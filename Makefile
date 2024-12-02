@@ -5,6 +5,7 @@ APP_UNIT_NAME := TODO
 IF_NAME := TODO # e.g. enp39s0
 
 NGINX_LOG := /var/log/nginx/access.log
+NGINX_ERR_LOG := /var/log/nginx/error.log
 MYSQL_SLOW_LOG := /var/log/mysql/slow.log
 
 MYSQL_CONFIG := /etc/mysql/my.cnf
@@ -29,6 +30,7 @@ help: ## show help
 log_reset: ## logファイルを初期化する
 	@sudo cp /dev/null $(MYSQL_SLOW_LOG)
 	@sudo cp /dev/null $(NGINX_LOG)
+	@sudo cp /dev/null $(NGINX_ERR_LOG)
 	@sudo rm profile.pb.gz
 	@sudo rm profile.html
 	@sudo rm profile.png
