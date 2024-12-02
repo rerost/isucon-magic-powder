@@ -85,6 +85,7 @@ apply_schema:
 mysql: ## mysql接続コマンド
 	mysql -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
 
+# TODO: pprofが取れることを確認したら60秒間プロファイリングするようにする
 # SECOND=60
 # debug
 SECOND=5
