@@ -135,6 +135,7 @@ func runMakeCommand(dir string, target string, out *os.File, startTime time.Time
 
 func main() {
 	runtime.SetBlockProfileRate(1)
+	runtime.SetMutexProfileFraction(1)
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
