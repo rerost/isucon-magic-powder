@@ -157,9 +157,7 @@ func main() {
 ssh isucon -tt "cd /home/isucon && sudo su isucon"
 ```
 
-## pprof
-ベンチ開始時に
+## デプロイコマンド
 ```
-make bench
-make pprof && make send_result
+make check && git push origin HEAD && ./deploy $(git branch --show-current)
 ```
