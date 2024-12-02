@@ -38,9 +38,12 @@ $ ulimit -n
     - [ ] `make setup-local-db`
     - [ ] `make restore-local-db`
     - [ ] `make check`
-- [ ] メトリクス
+- [ ] メトリクスの設定
     - [ ] Nginx
-
+    - [ ] `make alp` の結果をいい感じにする
+- [ ] モニタリング
+    - [ ] `htop`
+    - [ ] `make ifstat`
 Nginx
 
 ```

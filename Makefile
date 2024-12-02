@@ -38,6 +38,7 @@ log_reset: ## logファイルを初期化する
 
 .PHONY: alp
 alp: ## alpのログを見る
+	# TODO IDなどをいい感じにする
 	@sudo cat $(NGINX_LOG) | alp ltsv --sort sum -r
 	# -m "/posts/[0-9]+,/@\w+,/image/\d+"
 
