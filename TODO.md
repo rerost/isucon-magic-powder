@@ -87,7 +87,9 @@ func initialize(c echo.Context) error {
 
 ....
 
+
 func startPprof() {
+	startTime := time.Now()
 	log.Println("Starting pprof ...")
 	// 非同期でコマンドを実行
 	go func() {
@@ -99,12 +101,12 @@ func startPprof() {
 		}
 		defer logFile.Close()
 
-		if err := runMakeCommand("/home/isucon", "pprof", logFile); err != nil {
+		if err := runMakeCommand("/home/isucon", "pprof", logFile, startTime); err != nil {
 			log.Printf("Failed to run 'make pprof': %v", err)
 			return
 		}
 
-		if err := runMakeCommand("/home/isucon", "send_result", logFile); err != nil {
+		if err := runMakeCommand("/home/isucon", "send_result", logFile, startTime); err != nil {
 			log.Printf("Failed to run 'make send_result': %v", err)
 			return
 		}
@@ -113,8 +115,9 @@ func startPprof() {
 	}()
 }
 
-func runMakeCommand(dir string, target string, out *os.File) error {
-	cmd := exec.Command("make", target)
+func runMakeCommand(dir string, target string, out *os.File, startTime time.Time) error {
+	const layout = "2006-01-02 15:04:05"
+	cmd := exec.Command("make", target, fmt.Sprintf("BENCH_START_TIME=\"%s\"\n", startTime.Format(layout)))
 	cmd.Dir = dir // 実行ディレクトリを指定
 
 	cmd.Stdout = out
