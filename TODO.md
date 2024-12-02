@@ -87,7 +87,6 @@ func initialize(c echo.Context) error {
 
 ....
 
-
 func startPprof() {
 	startTime := time.Now()
 	log.Println("Starting pprof ...")
@@ -117,7 +116,7 @@ func startPprof() {
 
 func runMakeCommand(dir string, target string, out *os.File, startTime time.Time) error {
 	const layout = "2006-01-02 15:04:05"
-	cmd := exec.Command("make", target, fmt.Sprintf("BENCH_START_TIME=\"%s\"\n", startTime.Format(layout)))
+	cmd := exec.Command("make", target, fmt.Sprintf("BENCH_START_TIME=%s", startTime.Format(layout)))
 	cmd.Dir = dir // 実行ディレクトリを指定
 
 	cmd.Stdout = out
