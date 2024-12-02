@@ -59,14 +59,14 @@ show_slow_config: ## mysqlのslowログ設定を確認するコマンド
 
 .PHONY: send_result
 send_result: ## discordにalpとslowの出力を送信する
-	@make alp  > tmp.txt && discocat -f tmp.txt --filename alp.md
-	@make slow > tmp.txt && discocat -f tmp.txt --filename slow_log.txt
-	discocat -f profile.png --filename profile.png
-	discocat -f profile.txt --filename profile.txt
-	discocat -f block.txt --filename block.txt
-	discocat -f profile.html --filename profile.html
-	discocat -f profile.pb.gz --filename profile.pb.gz
-	discocat -f block.pb.gz --filename block.pb.gz
+	@make alp  > alp.txt && discocat -f alp.txt
+	@make slow > slow.txt && discocat -f slow.txt
+	discocat -f profile.png
+	discocat -f profile.txt
+	discocat -f block.txt
+	discocat -f profile.html
+	discocat -f profile.pb.gz
+	discocat -f block.pb.gz
 
 .PHONY: dump_schema
 dump_schema:
