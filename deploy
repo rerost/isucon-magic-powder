@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 set -euo pipefail
 
 big_info() {
@@ -13,4 +13,4 @@ BRANCH=$1
 # TODO: ホスト名を状況に合わせる
 ssh isucon-1 "sudo -u isucon /home/isucon/deploy_on_remote $BRANCH"
 
-echo "Deployed \n\`\`\`diff\n$(git show)\`\`\`" | discocat
+printf "Deployed \n\`\`\`diff\n%s\n\`\`\`\n" "$(git show | head -c 1950)" | discocat
