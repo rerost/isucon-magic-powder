@@ -1,9 +1,12 @@
 ## 事前準備
+- [ ] https://github.com/settings/ssh/new で `~/.ssh/isucon.pub` を登録
+    - [ ] `ssh-keygen -f ~/.ssh/isucon && cat ~/.ssh/isucon.pub`
 - [ ] レポジトリを作る https://github.com/new
 - [ ] issueにこのTODOをコピペ
 
 ## サーバの初期設定
 - [ ] ~/.ssh/config にIPアドレスを追加
+- [ ] GitHubのSSH キーを配布する`scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isucon ~/.ssh/id_rsa && sudo mv ~/.ssh/id_rsa /home/isucon/.ssh/id_rsa'`
 - [ ] ベンチ回す
 - [ ] 言語をGoにする
 - [ ] ベンチ回す
@@ -168,6 +171,11 @@ make check && git push origin HEAD && ./deploy $(git branch --show-current)
 ```
 ssh -NL 1234:localhost:1234 isucon
 
+```
+
+## SSHキーの設定
+```
+scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isucon ~/.ssh/id_rsa && sudo mv ~/.ssh/id_rsa /home/isucon/.ssh/id_rsa'
 ```
 
 ## シンボリックリンク

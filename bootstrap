@@ -250,20 +250,8 @@ install_golang() {
 git_init() {
   git init
   git branch -M master
-  ssh-keygen -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub
 
-  printf "\e[34mCopy this SSH key (https://github.com/settings/ssh/new)\e[m\n"
-  while :
-  do
-    read -p "Added SSH key? (y/n)" input
-    if [ "$input" = "y" ]; then
-      echo "Continue to setup!"
-      break
-    elif [ "$input" = "n" ]; then
-      echo "Please Add SSH Key."
-    fi
-  done
-
+  # Chceck SSH
   set +e
   ssh -T git@github.com
   set -e
