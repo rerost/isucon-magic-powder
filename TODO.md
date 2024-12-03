@@ -177,3 +177,16 @@ ssh -NL 1234:localhost:1234 isucon
 ```
 ln -sf /usr/local/go/bin/go /usr/bin/go
 ```
+
+## PRテンプレ
+```
+## 今起きていること
+*
+
+## 狙い
+
+## うまく行ったとき起きること
+
+## やること
+- [  ]
+  ```
