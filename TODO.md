@@ -2,7 +2,9 @@
 - [x] https://github.com/settings/ssh/new で `~/.ssh/isucon.pub` を登録
     - [ ] `ssh-keygen -f ~/.ssh/isucon && cat ~/.ssh/isucon.pub`
 - [ ] レポジトリを作る https://github.com/new
-- [ ] issueにこのTODOをコピペ
+- [ ] issueにこのTODOをコピペ & 置き換え
+	- [ ] `GITHUB_REPOSITORY e.g git@github.com:rerost/hoge.git`
+	- [ ] `DISCORD_WEBHOOK_URL`
 
 ## サーバの初期設定
 - [ ] ~/.ssh/config にIPアドレスを追加
