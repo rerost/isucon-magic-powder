@@ -66,8 +66,8 @@ BENCH_START_TIME ?= $(shell date --date="2 minutes ago" "+%Y-%m-%d %H:%M:%S")
 send_result: ## discordにalpとslowの出力を送信する
 	@make alp  > alp.txt && discocat -f alp.txt
 	@make slow > slow.txt && discocat -f slow.txt
-	sudo journalctl -u $(APP_UNIT_NAME) --since "$(BENCH_START_TIME)" > app_log.txt && discocat -f app_log.txt
-	sudo cat $(NGINX_ERR_LOG) > nginx_err_log.txt && discocat -f nginx_err_log.txt
+	@sudo journalctl -u $(APP_UNIT_NAME) --since "$(BENCH_START_TIME)" | tac | head -n 500 > app_log.txt && discocat -f app_log.txt
+	@sudo tail -n 500 $(NGINX_ERR_LOG) | tac > nginx_err_log.txt && discocat -f nginx_err_log.txt
 	discocat -f profile.png
 	discocat -f profile.txt
 	discocat -f block.txt
