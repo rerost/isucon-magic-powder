@@ -21,9 +21,24 @@ $1
 }
 
 bootstrap() {
-  info "setup"
+  # 引数の処理を追加
+  SKIP_INITIAL_SETUP="false"
+  GIT_REPO="false"
+  SKIP_REPO_SAVE=""
 
-  initial_setup
+  # webhookのURLを追加
+  WEBHOOK_URL=""
+  while getopts "sr:nw:" opt; do
+    case $opt in
+      s) SKIP_INITIAL_SETUP="true" ;;
+      r) GIT_REPO="$OPTARG" ;;
+      n) SKIP_REPO_SAVE="true" ;;
+      w) WEBHOOK_URL="$OPTARG" ;;
+    esac
+  done
+
+  info "setup"
+  initial_setup "$SKIP_INITIAL_SETUP"
 
   # 以下同じマシンで複数回走らせて問題ない
 
@@ -31,7 +46,7 @@ bootstrap() {
   sudo apt-get install -y ifstat gpg net-tools unzip
 
   info "start install tools"
-  install_all
+  install_all "$WEBHOOK_URL"
 
   info "download Makefile"
   download_makefile
@@ -46,23 +61,21 @@ bootstrap() {
 }
 
 initial_setup() {
-  echo "Run Initial Setup?(y/n): "
-  read answer
-
-  if [ "$answer" = "n" ]; then
-    echo "Skipped!"
+  local skip_setup="$1"
+  
+  if [ "$skip_setup" = "true" ]; then
+    info "Skipping initial setup"
     return 0
   fi
 
   setup
-
   setup_util
 
   info "start git init"
   git_init
 
   info "start git config"
-  git_config
+  git_config "$GIT_REPO" "$SKIP_REPO_SAVE"
 }
 
 setup() {
@@ -90,41 +103,44 @@ setup_util() {
 }
 
 git_config() {
+  local repo="$1"
+  local skip_save="$2"
+  
   git config --global user.email "hahihu314+github@gmail.com"
   git config --global user.name "rerost"
-
   git config --global core.editor 'vim -c "set fenc=utf-8"'
 
-  read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " input
-  git remote add origin $input
-
-  echo "Save repository?(y/n): "
-  read answer
-
-  if [ "$answer" = "y" ]; then
-    info "start save"
-    while :
-    do
-      read -p "Git added (y/n)" input
-      if [ "$input" = "y" ]; then
-        echo "Continue to setup!"
-        break
-      elif [ "$input" = "n" ]; then
-        echo "Please Add SSH Key."
-      fi
-    done
-    git add config
-    git commit -m "init"
-    git push -u origin master
-  else
-    git fetch origin
+  if [ -z "$repo" ]; then
+    read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " repo
   fi
+  git remote add origin "$repo"
+
+  if [ -n "$skip_save" ]; then
+    git fetch origin
+    return 0
+  fi
+
+  info "start save"
+  while :
+  do
+    read -p "Git added (y/n)" input
+    if [ "$input" = "y" ]; then
+      echo "Continue to setup!"
+      break
+    elif [ "$input" = "n" ]; then
+      echo "Pleas git add"
+    fi
+  done
+  git add config
+  git commit -m "init"
+  git push -u origin master
 }
 
 install_all() {
+  local webhook_url="$1"
   install_alp
   install_pt_query_digest
-  install_discocat
+  install_discocat "$webhook_url"
   install_html2png
   install_sqldef
   install_chrome
@@ -164,19 +180,26 @@ install_pt_query_digest() {
 }
 
 install_discocat() {
+  local webhook_url="$1"
   info 'Install discocat'
 
   mkdir tmp_discocat/
   cd tmp_discocat/
 
-  wget https://github.com/rerost/discocat/releases/download/v0.1.3/discocat_Linux_x86_64.tar.gz
+  # バージョンを0.1.4に更新
+  wget https://github.com/rerost/discocat/releases/download/v0.1.4/discocat_Linux_x86_64.tar.gz
   tar zxvf discocat_Linux_x86_64.tar.gz
   sudo mv ./discocat /usr/bin/
 
   cd -
   rm -rf tmp_discocat/
 
-  discocat --configure
+  # webhook URLを設定に追加
+  if [ -n "$webhook_url" ]; then
+    discocat --configure --webhook "$webhook_url"
+  else
+    discocat --configure
+  fi
 
   success "install discocat"
 }
