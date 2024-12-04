@@ -240,6 +240,7 @@ install_datadog() {
   DD_API_KEY="$DD_API_KEY" DD_SITE="ap1.datadoghq.com" bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
 
   success "install datadog"
+}
 
 install_golang() {
   info 'Install golang'
