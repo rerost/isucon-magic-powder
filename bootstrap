@@ -26,6 +26,10 @@ bootstrap() {
   initial_setup
 
   # 以下同じマシンで複数回走らせて問題ない
+
+  # ifstat: ネットワークの帯域を確認するためのもの
+  sudo apt-get install -y ifstat gpg net-tools unzip
+
   info "start install tools"
   install_all
 
@@ -35,8 +39,6 @@ bootstrap() {
   info "download deploy script"
   download_deploy_script
 
-  # ifstat: ネットワークの帯域を確認するためのもの
-  sudo apt-get install -y ifstat gpg net-tools unzip
   check
 
   info "script Done!"
