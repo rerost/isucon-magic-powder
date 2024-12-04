@@ -146,7 +146,7 @@ git_config() {
       echo "Continue to setup!"
       break
     elif [ "$input" = "n" ]; then
-      echo "Please Add SSH Key."
+      echo "Pleas git add"
     fi
   done
   git add config
