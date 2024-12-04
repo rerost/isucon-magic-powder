@@ -186,6 +186,12 @@ scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isu
 ln -sf /usr/local/go/bin/go /usr/bin/go
 ```
 
+## MySQL
+MySQL周りで `ERROR 29 (HY000) at line 1: File '/var/log/mysql/slow.log' not found (OS errno 13 - Permission denied)` が出たら
+```
+sudo chown mysql:mysql /var/log/mysql/slow.log
+```
+
 ## PRテンプレ
 ```
 ## 今起きていること
