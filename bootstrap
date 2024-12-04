@@ -21,24 +21,45 @@ $1
 }
 
 bootstrap() {
-  # 引数の処理を追加
+  # 長いオプションと短いオプションの定義
+  OPTS=`getopt -o s:r:n:w: --long skip-initialize,git-repository:,skip-save-to-repo,webhook: -n 'bootstrap' -- "$@"`
+
+  if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+  eval set -- "$OPTS"
+
+  # デフォルト値の設定
   SKIP_INITIAL_SETUP="false"
   GIT_REPO=""
   SKIP_REPO_SAVE="false"
-
-  # webhookのURLを追加
   WEBHOOK_URL=""
-  while getopts "sr:nw:" opt; do
-    case $opt in
-      s) SKIP_INITIAL_SETUP="true" ;;
-      r) GIT_REPO="$OPTARG" ;;
-      n) SKIP_REPO_SAVE="true" ;;
-      w) WEBHOOK_URL="$OPTARG" ;;
+
+  # オプションの処理
+  while true; do
+    case "$1" in
+      -s | --skip-initialize )
+        SKIP_INITIAL_SETUP="true"
+        shift ;;
+      -r | --git-repository )
+        GIT_REPO="$2"
+        shift 2 ;;
+      -n | --skip-save-to-repo )
+        SKIP_REPO_SAVE="true" 
+        shift ;;
+      -w | --webhook )
+        WEBHOOK_URL="$2"
+        shift 2 ;;
+      -- ) shift; break ;;
+      * ) break ;;
     esac
   done
-
   info "setup"
-  initial_setup "$SKIP_INITIAL_SETUP"
+
+  if [ "$SKIP_INITIAL_SETUP" != "true" ]; then
+    initial_setup
+
+    return 0
+  fi
 
   # 以下同じマシンで複数回走らせて問題ない
 
@@ -61,13 +82,6 @@ bootstrap() {
 }
 
 initial_setup() {
-  local skip_setup="$1"
-  
-  if [ "$skip_setup" = "true" ]; then
-    info "Skipping initial setup"
-    return 0
-  fi
-
   setup
   setup_util
 
