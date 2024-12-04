@@ -21,44 +21,8 @@ $1
 }
 
 bootstrap() {
-  # 長いオプションと短いオプションの定義
-  OPTS=`getopt -o s:r:n:w: --long skip-initialize,git-repository:,skip-save-to-repo,webhook: -n 'bootstrap' -- "$@"`
-
-  if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
-
-  eval set -- "$OPTS"
-
-  # デフォルト値の設定
-  SKIP_INITIAL_SETUP="false"
-  GIT_REPO=""
-  SKIP_REPO_SAVE="false"
-  WEBHOOK_URL=""
-
-  # オプションの処理
-  while true; do
-    case "$1" in
-      -s | --skip-initialize )
-        SKIP_INITIAL_SETUP="true"
-        shift ;;
-      -r | --git-repository )
-        GIT_REPO="$2"
-        shift 2 ;;
-      -n | --skip-save-to-repo )
-        SKIP_REPO_SAVE="true" 
-        shift ;;
-      -w | --webhook )
-        WEBHOOK_URL="$2"
-        shift 2 ;;
-      -- ) shift; break ;;
-      * ) break ;;
-    esac
-  done
-  info "setup"
-
   if [ "$SKIP_INITIAL_SETUP" != "true" ]; then
     initial_setup
-
-    return 0
   fi
 
   # 以下同じマシンで複数回走らせて問題ない
@@ -349,5 +313,40 @@ download_deploy_script() {
   curl -O https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/deploy_on_remote
   chmod +x deploy_on_remote
 }
+
+# 長いオプションと短いオプションの定義
+OPTS=`getopt -o s:r:n:w: --long skip-initialize,git-repository:,skip-save-to-repo,webhook: -n 'bootstrap' -- "$@"`
+
+if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+eval set -- "$OPTS"
+
+# デフォルト値の設定
+SKIP_INITIAL_SETUP="false"
+GIT_REPO=""
+SKIP_REPO_SAVE="false"
+WEBHOOK_URL=""
+
+# オプションの処理
+while true; do
+  echo $1
+  case "$1" in
+    -s | --skip-initialize )
+      SKIP_INITIAL_SETUP="true"
+      shift ;;
+    -r | --git-repository )
+      GIT_REPO="$2"
+      shift 2 ;;
+    -n | --skip-save-to-repo )
+      SKIP_REPO_SAVE="true" 
+      shift ;;
+    -w | --webhook )
+      WEBHOOK_URL="$2"
+      shift 2 ;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
+done
+info "setup"
 
 bootstrap
