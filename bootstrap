@@ -22,8 +22,8 @@ $1
 
 bootstrap() {
   # 引数の処理を追加
-  SKIP_INITIAL_SETUP=""
-  GIT_REPO=""
+  SKIP_INITIAL_SETUP="false"
+  GIT_REPO="false"
   SKIP_REPO_SAVE=""
 
   # webhookのURLを追加
@@ -66,15 +66,6 @@ initial_setup() {
   if [ "$skip_setup" = "true" ]; then
     info "Skipping initial setup"
     return 0
-  fi
-
-  if [ -z "$skip_setup" ]; then
-    echo "Run Initial Setup?(y/n): "
-    read answer
-    if [ "$answer" = "n" ]; then
-      echo "Skipped!"
-      return 0
-    fi
   fi
 
   setup
@@ -127,15 +118,6 @@ git_config() {
   if [ -n "$skip_save" ]; then
     git fetch origin
     return 0
-  fi
-
-  if [ -z "$skip_save" ]; then
-    echo "Save repository?(y/n): "
-    read answer
-    if [ "$answer" != "y" ]; then
-      git fetch origin
-      return 0
-    fi
   fi
 
   info "start save"
