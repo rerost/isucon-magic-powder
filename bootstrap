@@ -23,8 +23,8 @@ $1
 bootstrap() {
   # 引数の処理を追加
   SKIP_INITIAL_SETUP="false"
-  GIT_REPO="false"
-  SKIP_REPO_SAVE=""
+  GIT_REPO=""
+  SKIP_REPO_SAVE="false"
 
   # webhookのURLを追加
   WEBHOOK_URL=""
@@ -115,7 +115,7 @@ git_config() {
   fi
   git remote add origin "$repo"
 
-  if [ -n "$skip_save" ]; then
+  if [ "$skip_save" = "true" ]; then
     git fetch origin
     return 0
   fi
