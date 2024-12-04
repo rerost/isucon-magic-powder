@@ -8,20 +8,20 @@ isucon用のスクリプト類
 ## Bootstrap
 ### 初回実行
 ```
-curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<Discord Webhook URL>"
+curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<DISCORD_WEBHOOK_URL>"
 ```
 
 ### 2台目以降のサーバ
 レポジトリへの保存をスキップ
 ```
-curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<Discord Webhook URL>" -n
+curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<DISCORD_WEBHOOK_URL>" -n
 ```
 
 ### デバッグ時
 * レポジトリへの保存をスキップ
 * ツールのインストールをスキップ
 ```
-curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<Discord Webhook URL>" -n -s
+curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r "git@github.com:rerost/hoge.git" -w "<DISCORD_WEBHOOK_URL>" -n -s
 ```
 
 ## Usage
