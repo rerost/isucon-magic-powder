@@ -26,11 +26,14 @@ bootstrap() {
   GIT_REPO=""
   SKIP_REPO_SAVE=""
 
-  while getopts "sr:n" opt; do
+  # webhookのURLを追加
+  WEBHOOK_URL=""
+  while getopts "sr:nw:" opt; do
     case $opt in
       s) SKIP_INITIAL_SETUP="true" ;;
       r) GIT_REPO="$OPTARG" ;;
       n) SKIP_REPO_SAVE="true" ;;
+      w) WEBHOOK_URL="$OPTARG" ;;
     esac
   done
 
@@ -43,7 +46,7 @@ bootstrap() {
   sudo apt-get install -y ifstat gpg net-tools unzip
 
   info "start install tools"
-  install_all
+  install_all "$WEBHOOK_URL"
 
   info "download Makefile"
   download_makefile
@@ -152,9 +155,10 @@ git_config() {
 }
 
 install_all() {
+  local webhook_url="$1"
   install_alp
   install_pt_query_digest
-  install_discocat
+  install_discocat "$webhook_url"
   install_html2png
   install_sqldef
   install_chrome
@@ -194,19 +198,26 @@ install_pt_query_digest() {
 }
 
 install_discocat() {
+  local webhook_url="$1"
   info 'Install discocat'
 
   mkdir tmp_discocat/
   cd tmp_discocat/
 
-  wget https://github.com/rerost/discocat/releases/download/v0.1.3/discocat_Linux_x86_64.tar.gz
+  # バージョンを0.1.4に更新
+  wget https://github.com/rerost/discocat/releases/download/v0.1.4/discocat_Linux_x86_64.tar.gz
   tar zxvf discocat_Linux_x86_64.tar.gz
   sudo mv ./discocat /usr/bin/
 
   cd -
   rm -rf tmp_discocat/
 
-  discocat --configure
+  # webhook URLを設定に追加
+  if [ -n "$webhook_url" ]; then
+    discocat --configure --webhook "$webhook_url"
+  else
+    discocat --configure
+  fi
 
   success "install discocat"
 }
