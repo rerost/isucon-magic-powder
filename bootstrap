@@ -21,9 +21,21 @@ $1
 }
 
 bootstrap() {
-  info "setup"
+  # 引数の処理を追加
+  SKIP_INITIAL_SETUP=""
+  GIT_REPO=""
+  SKIP_REPO_SAVE=""
 
-  initial_setup
+  while getopts "sr:n" opt; do
+    case $opt in
+      s) SKIP_INITIAL_SETUP="true" ;;
+      r) GIT_REPO="$OPTARG" ;;
+      n) SKIP_REPO_SAVE="true" ;;
+    esac
+  done
+
+  info "setup"
+  initial_setup "$SKIP_INITIAL_SETUP"
 
   # 以下同じマシンで複数回走らせて問題ない
 
@@ -46,23 +58,30 @@ bootstrap() {
 }
 
 initial_setup() {
-  echo "Run Initial Setup?(y/n): "
-  read answer
-
-  if [ "$answer" = "n" ]; then
-    echo "Skipped!"
+  local skip_setup="$1"
+  
+  if [ "$skip_setup" = "true" ]; then
+    info "Skipping initial setup"
     return 0
   fi
 
-  setup
+  if [ -z "$skip_setup" ]; then
+    echo "Run Initial Setup?(y/n): "
+    read answer
+    if [ "$answer" = "n" ]; then
+      echo "Skipped!"
+      return 0
+    fi
+  fi
 
+  setup
   setup_util
 
   info "start git init"
   git_init
 
   info "start git config"
-  git_config
+  git_config "$GIT_REPO" "$SKIP_REPO_SAVE"
 }
 
 setup() {
@@ -90,35 +109,46 @@ setup_util() {
 }
 
 git_config() {
+  local repo="$1"
+  local skip_save="$2"
+  
   git config --global user.email "hahihu314+github@gmail.com"
   git config --global user.name "rerost"
-
   git config --global core.editor 'vim -c "set fenc=utf-8"'
 
-  read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " input
-  git remote add origin $input
-
-  echo "Save repository?(y/n): "
-  read answer
-
-  if [ "$answer" = "y" ]; then
-    info "start save"
-    while :
-    do
-      read -p "Git added (y/n)" input
-      if [ "$input" = "y" ]; then
-        echo "Continue to setup!"
-        break
-      elif [ "$input" = "n" ]; then
-        echo "Please Add SSH Key."
-      fi
-    done
-    git add config
-    git commit -m "init"
-    git push -u origin master
-  else
-    git fetch origin
+  if [ -z "$repo" ]; then
+    read -p "empty repository. e.g git@github.com:rerost/hogehoge.git: " repo
   fi
+  git remote add origin "$repo"
+
+  if [ -n "$skip_save" ]; then
+    git fetch origin
+    return 0
+  fi
+
+  if [ -z "$skip_save" ]; then
+    echo "Save repository?(y/n): "
+    read answer
+    if [ "$answer" != "y" ]; then
+      git fetch origin
+      return 0
+    fi
+  fi
+
+  info "start save"
+  while :
+  do
+    read -p "Git added (y/n)" input
+    if [ "$input" = "y" ]; then
+      echo "Continue to setup!"
+      break
+    elif [ "$input" = "n" ]; then
+      echo "Please Add SSH Key."
+    fi
+  done
+  git add config
+  git commit -m "init"
+  git push -u origin master
 }
 
 install_all() {
