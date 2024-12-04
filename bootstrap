@@ -123,6 +123,7 @@ install_all() {
   install_sqldef
   install_chrome
   install_golang
+  install_datadog
 }
 
 
@@ -227,6 +228,19 @@ install_chrome() {
   sudo apt-get install -y google-chrome-stable
 }
 
+install_datadog() {
+  info 'Install datadog'
+
+  # DD_API_KEY が空ならインストールをスキップ
+  if [ -z "$DD_API_KEY" ]; then
+    success "DD_API_KEY is empty. skip install datadog"
+    return
+  fi
+
+  DD_API_KEY="$DD_API_KEY" DD_SITE="ap1.datadoghq.com" bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
+
+  success "install datadog"
+
 install_golang() {
   info 'Install golang'
 
@@ -315,7 +329,7 @@ download_deploy_script() {
 }
 
 # 長いオプションと短いオプションの定義
-OPTS=`getopt -o s:r:n:w: --long skip-initialize,git-repository:,skip-save-to-repo,webhook: -n 'bootstrap' -- "$@"`
+OPTS=`getopt -o s:r:n:w:d: --long skip-initialize,git-repository:,skip-save-to-repo,webhook:,datadog-api-key: -n 'bootstrap' -- "$@"`
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
@@ -326,6 +340,7 @@ SKIP_INITIAL_SETUP="false"
 GIT_REPO=""
 SKIP_REPO_SAVE="false"
 WEBHOOK_URL=""
+DD_API_KEY=""
 
 # オプションの処理
 while true; do
@@ -342,6 +357,9 @@ while true; do
       shift ;;
     -w | --webhook )
       WEBHOOK_URL="$2"
+      shift 2 ;;
+    -d | --datadog-api-key )
+      DD_API_KEY="$2"
       shift 2 ;;
     -- ) shift; break ;;
     * ) break ;;
