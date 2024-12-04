@@ -128,6 +128,7 @@ install_all() {
   install_html2png
   install_sqldef
   install_chrome
+  install_golang
 }
 
 
