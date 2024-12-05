@@ -57,8 +57,9 @@ $ ulimit -n
 - [ ] モニタリング
     - [ ] `htop`
     - [ ] `make ifstat`
-Nginx
+- [ ] `go work init ./webapp/go`
 
+Nginx
 ```
 http {
 ...
