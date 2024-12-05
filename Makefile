@@ -171,7 +171,7 @@ setup-local-db:
 
 .PHONY: restore-local-db
 restore-local-db:
-	scp isucon:/home/isucon/dump.sql dump.sql
+	scp isucon-1:/home/isucon/dump.sql dump.sql
 	mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < dump.sql
 
 .PHONY: deploy
