@@ -22,7 +22,7 @@
 - [ ] ~/.ssh/config にIPアドレスを追加
 - [ ] GitHubのSSH キーを配布する`scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isucon ~/.ssh/id_rsa && sudo mv ~/.ssh/id_rsa /home/isucon/.ssh/id_rsa'`
 - [ ] 言語をGoにする
-- [ ] `ssh isucon-2 -tt 'cd /home/isucon && sudo su -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY e.g git@github.com:rerost/hoge.git> -w <DISCORD_WEBHOOK_URL> -d <DD_API_KEY>"'`
+- [ ] `ssh isucon-2 -tt 'cd /home/isucon && sudo su -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY e.g git@github.com:rerost/hoge.git> -w <DISCORD_WEBHOOK_URL> -d <DD_API_KEY> -n"'`
 
 ```
 $ ulimit -n
