@@ -186,7 +186,7 @@ func main() {
 	conf := mysql.NewConfig()
 	...
 	conf.InterpolateParams = true
-
+```
 
 ## sshコマンド
 ```
@@ -204,7 +204,7 @@ make deploy
 ```
 
 ## シンボリックリンク
-`/usr/bin/go`` にアクセスすると `/usr/local/go/bin/go`  を参照する
+`/usr/bin/go` にアクセスすると `/usr/local/go/bin/go`  を参照する
 `ln -sf <dst> <src>`
 
 ```
@@ -233,7 +233,6 @@ sudo chown mysql:mysql /var/log/mysql/slow.log
 ```
 [mysqld]
 bind-address = 0.0.0.0
-
 innodb_flush_log_at_trx_commit = 2
 disable-log-bin = 1
 ```
