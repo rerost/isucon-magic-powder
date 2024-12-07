@@ -152,12 +152,6 @@ ifstat: ## ifstatを見る
 .PHONY: check
 check: application_build dry_run_schema
 
-.PHONY: commit
-commit:
-	git add -u .
-	git commit --allow-empty -m "isucon"
-	git push origin HEAD
-
 .PHONY: db_dump
 db_dump:
 	mysqldump -u$(DB_USER) -p$(DB_PASS) $(DB_NAME) > dump.sql
