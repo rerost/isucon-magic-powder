@@ -75,10 +75,6 @@ send_result: ## discordにalpとslowの出力を送信する
 	discocat -f profile.pb.gz
 	discocat -f block.pb.gz
 
-.PHONY: dump_schema
-dump_schema:
-	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --export > schema.sql
-
 .PHONY: dry_run_schema
 dry_run_schema:
 	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --dry-run < schema.sql
@@ -151,6 +147,10 @@ ifstat: ## ifstatを見る
 
 .PHONY: check
 check: application_build dry_run_schema
+
+.PHONY: schema_dump
+dump_schema:
+	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) --export > schema.sql
 
 .PHONY: db_dump
 db_dump:
