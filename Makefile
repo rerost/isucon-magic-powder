@@ -87,7 +87,6 @@ dry_run_schema:
 apply_schema:
 	mysqldef -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < schema.sql
 
-
 .PHONY: mysql
 mysql: ## mysql接続コマンド
 	mysql -h $(DB_HOST) -u $(DB_USER) -p$(DB_PASS) $(DB_NAME)
@@ -118,8 +117,6 @@ pprof: # pprof(profile, block)を取得し、txt, html, pngに変換する
 .PHONY: application_build
 application_build: ## application build (wip)
 	cd $(APP_DIR) && make
-	# TODO: ローカルでの確認ができるようになったら
-	# @make apply_schema
 
 .PHONY: application_restart
 application_restart: ## application restart (wip)
@@ -140,6 +137,8 @@ daemon_reload:
 	sudo systemctl daemon-reload
 
 .PHONY: bench
+# TODO: ローカルでDBの確認ができるようになったら
+# bench: daemon_reload log_reset application_build apply_schema restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
 bench: daemon_reload log_reset application_build restart slow_on ## bench回す前に実行するコマンド(これで全ての前処理が完了する状態を作る)
 
 .PHONY: log
