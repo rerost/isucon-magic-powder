@@ -94,8 +94,21 @@ improt (
 )
 
 func initialize(c echo.Context) error {
+    var eg errgroup.Group
+    eg.Go(func() error {
+        // もともとある処理
+        ...
+        return nil
+    })
+
+    if err := eg.Wait(); err != nil {
+        c.Logger().Errorf("failed to initialize: %v", err)
+        return echo.NewHTTPError(http.StatusInternalServerError, "failed to initialize: "+err.Error())
+    }
+
     ...
     startPprof()
+    ...
 }
 
 ....
