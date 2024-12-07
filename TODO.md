@@ -202,6 +202,16 @@ MySQL周りで `ERROR 29 (HY000) at line 1: File '/var/log/mysql/slow.log' not f
 sudo chown mysql:mysql /var/log/mysql/slow.log
 ```
 
+## 設定ファイルのGitHub同期
+例:
+```
+MYSQL_CONF=/etc/mysql
+
+sudo cp -a $MYSQL_CONF $HOME/config/mysql
+sudo rm -rf $MYSQL_CONF
+sudo ln -sf $HOME/config/mysql /etc
+```
+
 ## PRテンプレ
 ```
 ## 今起きていること
