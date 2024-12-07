@@ -14,7 +14,7 @@
 - [ ] 言語をGoにする
 - [ ] ベンチ回す
 - [ ] `git add` で必要そうなものをaddしておく。`.gitignore` もこのとき修正
-- [ ] `ssh isucon-1 -tt 'cd /home/isucon && sudo -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY e.g git@github.com:rerost/hoge.git> -w <DISCORD_WEBHOOK_URL> -d <DD_API_KEY>"'`
+- [ ] `ssh isucon-1 -tt 'cd /home/isucon && sudo -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY> -w <DISCORD_WEBHOOK_URL> -d <DD_API_KEY>"'`
 - [ ] ファイルディスクリプタの設定
 - [ ] ベンチ回す
 
@@ -34,7 +34,7 @@ $ ulimit -n
 - [ ] ~/.ssh/config にIPアドレスを追加
 - [ ] GitHubのSSH キーを配布する`scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isucon ~/.ssh/id_rsa && sudo mv ~/.ssh/id_rsa /home/isucon/.ssh/id_rsa'`
 - [ ] 言語をGoにする
-- [ ] `ssh isucon-2 -tt 'cd /home/isucon && sudo -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY e.g git@github.com:rerost/hoge.git> -w <DISCORD_WEBHOOK_URL> -n -d <DD_API_KEY>"'`
+- [ ] `ssh isucon-2 -tt 'cd /home/isucon && sudo -u isucon bash -c "curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O && chmod +x bootstrap && ./bootstrap -r <GITHUB_REPOSITORY> -w <DISCORD_WEBHOOK_URL> -n -d <DD_API_KEY>"'`
 
 ## 初期設定
 - [ ] Makefileの準備
@@ -58,6 +58,7 @@ $ ulimit -n
     - [ ] `htop`
     - [ ] `make ifstat`
 - [ ] `go work init ./webapp/go`
+- [ ] 2台目以降の動くようにする
 
 Nginx
 ```
@@ -180,25 +181,26 @@ func main() {
 	)
 ```
 
+もしくは
+```go
+	conf := mysql.NewConfig()
+	...
+	conf.InterpolateParams = true
+
+
 ## sshコマンド
 ```
 ssh isucon -tt "cd /home/isucon && sudo su isucon"
 ```
 
-## デプロイコマンド
-```
-make check && git push origin HEAD && ./deploy $(git branch --show-current)
-```
-
 ## ポートフォワード
 ```
 ssh -NL 1234:localhost:1234 isucon
-
 ```
 
-## SSHキーの設定
+## デプロイコマンド
 ```
-scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isucon ~/.ssh/id_rsa && sudo mv ~/.ssh/id_rsa /home/isucon/.ssh/id_rsa'
+make deploy
 ```
 
 ## シンボリックリンク
@@ -207,12 +209,6 @@ scp ~/.ssh/isucon  isucon-1:~/.ssh/id_rsa && ssh isucon-1 'sudo chown isucon:isu
 
 ```
 ln -sf /usr/local/go/bin/go /usr/bin/go
-```
-
-## MySQL
-MySQL周りで `ERROR 29 (HY000) at line 1: File '/var/log/mysql/slow.log' not found (OS errno 13 - Permission denied)` が出たら
-```
-sudo chown mysql:mysql /var/log/mysql/slow.log
 ```
 
 ## 設定ファイルのGitHub同期
@@ -225,15 +221,62 @@ sudo rm -rf $MYSQL_CONF
 sudo ln -sf $HOME/config/mysql /etc
 ```
 
-## PRテンプレ
+## MySQL
+MySQL周りで `ERROR 29 (HY000) at line 1: File '/var/log/mysql/slow.log' not found (OS errno 13 - Permission denied)` が出たら
 ```
-## 今起きていること
-*
+sudo chown mysql:mysql /var/log/mysql/slow.log
+```
 
-## 狙い
+## MySQLのディスクへの書き込み頻度とかの調整
+`config/mysql/mysql.conf.d/mysqld.cnf`
 
-## うまく行ったとき起きること
+```
+[mysqld]
+bind-address = 0.0.0.0
 
-## やること
-- [  ]
-  ```
+innodb_flush_log_at_trx_commit = 2
+disable-log-bin = 1
+```
+
+## MySQLに外からアクセスできないとき
+`sudo mysql -u` で権限付与
+isucon ユーザーに付与する場合
+
+```
+CREATE USER 'isucon'@'%' IDENTIFIED BY 'isucon';
+GRANT ALL PRIVILEGES ON *.* TO 'isucon'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+## デバッグ用のテストファイル
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"testing"
+)
+
+func TestHoge(t *testing.T) {
+	sqlxDb, err := connectDB(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	tx, err := sqlxDb.BeginTxx(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer tx.Rollback()
+
+	res, err := fillUsersResponse(context.Background(), tx, []UserModel{
+		{ID: 1},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(res[0].IconHash)
+	t.Error("OK")
+}
+```
