@@ -39,6 +39,7 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicIpAddress' \
             --output text)
           echo "PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
+          aws ec2 wait instance-status-ok --instance-ids $INSTANCE_ID
 
       - name: Add SSH Key
         run: |
