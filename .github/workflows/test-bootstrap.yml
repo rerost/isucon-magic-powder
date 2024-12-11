@@ -22,3 +22,6 @@ jobs:
         chmod +x bootstrap
         # Skip git add
         yes | ./bootstrap -r https://x-access-token:${ACCESS_TOKEN}@github.com/rerost/isucon-magic-powder-test.git -w ${DISCORD_WEBHOOK_URL}
+    - name: Clean up
+      run: |
+        git push origin --delete master
