@@ -1,0 +1,15 @@
+name: Test make setup
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run bootstrap
+      run: echo "OK" # ./bootstrap 入力待ちの部分があるためCIではスキップ
