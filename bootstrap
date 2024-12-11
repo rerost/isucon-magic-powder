@@ -53,7 +53,7 @@ initial_setup() {
   git_init
 
   info "start git config"
-  git_config "$GIT_REPO" "$SKIP_REPO_SAVE"
+  # git_config "$GIT_REPO" "$SKIP_REPO_SAVE"
 }
 
 setup() {
