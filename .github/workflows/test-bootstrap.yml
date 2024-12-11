@@ -15,9 +15,10 @@ jobs:
       env:
         GITHUB_REPOSITORY: "DUMMY_VALUE"
         DISCORD_WEBHOOK_URL: "DUMMY_VALUE"
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_FOR_TEST_REPOSITORY }}
       run: |
         echo "RUNN"
         curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
         chmod +x bootstrap
         # Skip git add
-        yes | ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL}
+        yes | ./bootstrap -r https://x-access-token:${ACCESS_TOKEN}:rerost/isucon-magic-powder-test.git -w ${DISCORD_WEBHOOK_URL}
