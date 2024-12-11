@@ -1,0 +1,23 @@
+name: Test Bootstrap Script
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test-bootstrap:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Run bootstrap script
+      env:
+        GITHUB_REPOSITORY: "DUMMY_VALUE"
+        DISCORD_WEBHOOK_URL: "DUMMY_VALUE"
+      run: |
+        echo "RUNN"
+        curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
+        chmod +x bootstrap
+        # Skip git add
+        yes | ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL}
