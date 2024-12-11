@@ -1,0 +1,27 @@
+name: Test Bootstrap Script
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test-bootstrap:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Run bootstrap script
+      env:
+        GITHUB_REPOSITORY: "DUMMY_VALUE"
+        DISCORD_WEBHOOK_URL: "DUMMY_VALUE"
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_FOR_TEST_REPOSITORY }}
+      run: |
+        echo "RUNN"
+        curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
+        chmod +x bootstrap
+        # Skip git add
+        yes | ./bootstrap -r https://x-access-token:${ACCESS_TOKEN}@github.com/rerost/isucon-magic-powder-test.git -w ${DISCORD_WEBHOOK_URL}
+    - name: Clean up
+      run: |
+        git push origin --delete master
