@@ -22,7 +22,7 @@ jobs:
         id: launch_ec2
         run: |
           INSTANCE_ID=$(aws ec2 run-instances \
-            --image-id ami-12345678 \
+            --image-id ami-041289d910c114864 \
             --count 1 \
             --instance-type t2.micro \
             --query 'Instances[0].InstanceId' \
