@@ -19,4 +19,5 @@ jobs:
         echo "RUNN"
         curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
         chmod +x bootstrap
-        ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL}
+        # Skip git add
+        yes | ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL}
