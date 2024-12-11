@@ -1,0 +1,24 @@
+name: Test Bootstrap Script
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-bootstrap:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Run bootstrap script
+      env:
+        GITHUB_REPOSITORY: "DUMMY_VALUE"
+        DISCORD_WEBHOOK_URL: "DUMMY_VALUE"
+        DD_API_KEY: ""
+      run: |
+        curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O
+        chmod +x bootstrap
+        ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL} -d ${DD_API_KEY} 
