@@ -19,6 +19,6 @@ jobs:
         DISCORD_WEBHOOK_URL: "DUMMY_VALUE"
       run: |
         echo "RUNN"
-        curl https://raw.githubusercontent.com/rerost/isucon-magic-powder/refs/heads/master/bootstrap -O
+        curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
         chmod +x bootstrap
         ./bootstrap -r git@github.com:${GITHUB_REPOSITORY}.git -w ${DISCORD_WEBHOOK_URL}
