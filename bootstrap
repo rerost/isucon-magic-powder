@@ -111,7 +111,7 @@ git_config() {
   done
   git add config
   git commit -m "init"
-  # git push -u origin master
+  git push -u origin master
 }
 
 install_all() {
