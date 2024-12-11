@@ -21,4 +21,4 @@ jobs:
         curl "https://raw.githubusercontent.com/rerost/isucon-magic-powder/${GITHUB_SHA}/bootstrap" -O
         chmod +x bootstrap
         # Skip git add
-        yes | ./bootstrap -r https://x-access-token:${ACCESS_TOKEN}:rerost/isucon-magic-powder-test.git -w ${DISCORD_WEBHOOK_URL}
+        yes | ./bootstrap -r https://x-access-token:${ACCESS_TOKEN}@github.com/rerost/isucon-magic-powder-test.git -w ${DISCORD_WEBHOOK_URL}
