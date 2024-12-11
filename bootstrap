@@ -60,8 +60,6 @@ setup() {
   mkdir -p $HOME/config
   MYSQL_CONF=/etc/mysql
 
-  # Debug Print
-  ls $HOME
   sudo cp -a $MYSQL_CONF $HOME/config/mysql
   sudo rm -rf $MYSQL_CONF
   sudo ln -sf $HOME/config/mysql /etc
@@ -72,7 +70,7 @@ setup() {
   sudo rm -rf $NGINX_CONF
   sudo ln -sf $HOME/config/nginx /etc
 
-  sudo chown -R $(whoami) config/
+  sudo chown -R $(whoami) $HOME/config/
 }
 
 setup_util() {
