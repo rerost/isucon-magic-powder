@@ -2,9 +2,7 @@ name: Test Bootstrap Script
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   test-bootstrap:
