@@ -198,6 +198,11 @@ ssh isucon -tt "cd /home/isucon && sudo su isucon"
 ssh -NL 1234:localhost:1234 isucon
 ```
 
+## 環境変数をSystemdのEnvironmentFileから読み込む
+```
+set -a && source env.sh && set +a
+```
+
 ## デプロイコマンド
 ```
 make deploy
