@@ -1,0 +1,58 @@
+name: AWS Test Environment
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. AWS CLIを設定
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ap-northeast-1
+
+      # 2. EC2インスタンスを起動
+      - name: Launch EC2 Instance
+        id: launch_ec2
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-041289d910c114864 \
+            --count 1 \
+            --instance-type t2.micro \
+            --key-name isucon-magic-powder-ci \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+          echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+
+      # 3. 起動したインスタンスのIPアドレスを取得
+      - name: Get EC2 Public IP
+        id: get_ip
+        run: |
+          PUBLIC_IP=$(aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[0].Instances[0].PublicIpAddress' \
+            --output text)
+          echo "PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
+          aws ec2 wait instance-status-ok --instance-ids $INSTANCE_ID
+
+      - name: Add SSH Key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > ssh_key
+          chmod 600 ssh_key
+
+      # 4. インスタンスに接続してテスト実行 (例: SSH)
+      - name: Run Tests on EC2 Instance
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@$PUBLIC_IP -i ssh_key "echo 'Running tests...'"
+
+      # 5. テスト完了後にインスタンスを削除
+      - name: Terminate EC2 Instance
+        if: always()
+        run: |
+          aws ec2 terminate-instances --instance-ids $INSTANCE_ID
